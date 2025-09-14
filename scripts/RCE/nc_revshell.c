@@ -6,9 +6,9 @@
 
 /*
 * COMPILATION INSTRUCTIONS
-* For x64 EXE file (standard): x86_64-w64-mingw32-gcc nc_shell.c -o payload.exe
-* For x86 EXE file: i686-w64-mingw32-gcc nc_shell.c -o payload.exe
-* For DLL file: x86_64-w64-mingw32-gcc -shared -o payload.dll nc_shell.c
+* For x64 EXE file (standard): x86_64-w64-mingw32-gcc nc_revshell.c -o payload.exe
+* For x86 EXE file: i686-w64-mingw32-gcc nc_revshell.c -o payload.exe
+* For DLL file: x86_64-w64-mingw32-gcc -shared -o payload.dll nc_revshell.c
 */
 
 int main(void) {
