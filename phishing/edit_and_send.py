@@ -24,21 +24,21 @@ ATTENDEES = ["ceo@poop.com", "cto@poop.com"]
 
 # EDIT THIS PART
 EVENT_TEXT = """
-Dear employee,
-
-We would like to inform you about an important poop meeting regarding recent company-wide changes and policies. Your attendance is MANDATORY as we will be discussing essential updates that impact all employees' poop policies.
-
-Topics will include:
-
-- Pooping schedules
-- Pooping quotas
-- Updates to pooping during leave days
-
-This meeting is of utmost urgency and will be your opportunity to ask any questions or raise concerns regarding the new company poop policies.
-
-We look forward to your participation and eager pooping.
-
-Best regards,
+Dear employee,\n
+\n
+We would like to inform you about an important poop meeting regarding recent company-wide changes and policies. Your attendance is MANDATORY as we will be discussing essential updates that impact all employees' poop policies.\n
+\n
+Topics will include:\n
+\n
+- Pooping schedules\n
+- Pooping quotas\n
+- Updates to pooping during leave days\n
+\n
+This meeting is of utmost urgency and will be your opportunity to ask any questions or raise concerns regarding the new company poop policies.\n
+\n
+We look forward to your participation and eager pooping.\n
+\n
+Best regards,\n
 Poop Manager
 """
 
