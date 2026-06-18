@@ -1,3 +1,5 @@
+// PROCESS HOLLOWING (HIJACK PROCESS IN THE MIDDLE OF ITS EXECUTION)
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
