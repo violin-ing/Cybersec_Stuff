@@ -1,4 +1,4 @@
-// NOTE: THIS WILL BE COMPILED INTO A DLL!!!
+// NOTE: THIS WILL BE COMPILED INTO A DLL (USE CONSOLE APP BUILD)
 using System;
 using System.Collections.Generic;
 using System.Linq;
