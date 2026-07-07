@@ -1,3 +1,4 @@
+// NOTE: THIS GENERATES A DLL FILE (AND USE CLASSLIBRARY BUILD)
 using System;
 using System.Collections.Generic;
 using System.Linq;
