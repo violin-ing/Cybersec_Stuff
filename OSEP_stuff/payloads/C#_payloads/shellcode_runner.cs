@@ -1,3 +1,4 @@
+// NOTE: THIS WILL BE COMPILED INTO A DLL!!!
 using System;
 using System.Collections.Generic;
 using System.Linq;
