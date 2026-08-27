@@ -1,0 +1,5 @@
+IMPORTANT NOTE FOR MS VISUAL STUDIO COMPILATION!!!
+
+For the shellcode_runner scripts, we need to compile them and specify the config manager:
+
+-> Go to Configuration Manager and choose x64 under Active Solution Platform

